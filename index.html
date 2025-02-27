@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrolling Comic</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Comic  Title</h1>
+        <p>Scroll down to begin reading</p>
+        <div class="scroll-indicator">↓</div>
+        <img id="flower" src="img/panel1.jpg" alt="Saturn" />
+    </header>
+    
+    <main class="comic-container">
+        <h2>Plotline of that page</h2>
+        <div class="comic-panels">
+            <div class="panel" id="panel1">
+                <img src="img/panel1.jpg" alt="Comic panel 1">
+            </div>
+            <div class="panel" id="panel2">
+                <img src="img/panel2.jpg" alt="Comic panel 2">
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button id="prevBtn" class="nav-btn">←</button>
+            <button id="nextBtn" class="nav-btn">→</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 Comic Title - All Rights Reserved</p>
+        <p>Made By:Deema Al Zoubi, Guli Habibullaeva, Khatira Kazemi, Nigina Rashidov
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+    padding: 1rem;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 35rem;
+}
+h2 {
+    font-size: 3rem;
+    margin-bottom: 5rem;
+    text-align: center; /* Centers text */
+}
+
+.scroll-indicator {
+    font-size: 2rem;
+    margin-top: 2rem;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+.comic-container {
+    max-width: 1000px;
+    margin: 5rem auto;
+    padding: 2rem;
+}
+
+.comic-panels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.panel {
+    flex: 1;
+    min-width: 300px;
+    border: 5px solid #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    background-color: #fff;
+}
+
+.panel:hover {
+    transform: scale(1.02);
+}
+
+.panel img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.nav-btn {
+    font-size: 2rem;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.nav-btn:hover {
+    background-color: #555;
+    transform: scale(1.1);
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+.nav-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: #333;
+    color: #fff;
+}
+
+#flower {
+	position: absolute;
+	width: 300px;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: -400px; /* hide it initially */
+	transition: bottom 1s ease;
+  }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .comic-panels {
+        flex-direction: column;
+    }
+    
+    .panel {
+        min-width: 100%;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+}
+.comic-panels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5rem; /* Increased from 1rem to 2rem for more space between panels */
+    margin-bottom: 1rem;
+}
+
+/* Alternative option: If you want even more space or specifically more space only between panel 1 and 2 */
+#panel1 {
+    margin-right: 2rem; /* Add right margin to panel 1 */
+}
+
+#panel2 {
+    margin-left: 2rem; /* Add left margin to panel 2 */
+}
