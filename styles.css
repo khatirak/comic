@@ -5,8 +5,8 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #aae3ff;
     color: #333;
 }
 
@@ -17,7 +17,7 @@ header {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: #fff;
+    background-color: #aae3ff;
     padding: 1rem;
 }
 
@@ -25,16 +25,37 @@ h1 {
     font-size: 3rem;
     margin-bottom: 35rem;
 }
+
 h2 {
     font-size: 3rem;
     margin-bottom: 5rem;
     text-align: center; /* Centers text */
 }
 
+h3 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.scroll-container {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
 .scroll-indicator {
     font-size: 2rem;
-    margin-top: 2rem;
     animation: bounce 2s infinite;
+    margin-bottom: 5px;
+}
+
+.scroll-text {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: bold;
 }
 
 @keyframes bounce {
@@ -83,6 +104,48 @@ h2 {
     display: block;
 }
 
+/* Story choice section styling */
+.story-choice {
+    background-color: #f4d584;
+    border: 5px solid #333;
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 3rem auto;
+    max-width: 800px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    display: none; /* Hidden by default */
+}
+
+.choice-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.choice-btn {
+    background-color: #1D400F;
+    color: white;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    border: 3px solid #333;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.choice-btn:hover {
+    background-color: #2d6016;
+    transform: scale(1.05);
+}
+
+.choice-btn:active {
+    transform: scale(0.98);
+}
+
 /* Panel caption styling */
 .panel-caption {
     padding: 15px;
@@ -111,7 +174,7 @@ h2 {
 
 .nav-btn {
     font-size: 2rem;
-    background-color: #333;
+    background-color: #A15C2F;
     color: #fff;
     border: none;
     border-radius: 50%;
@@ -122,7 +185,7 @@ h2 {
 }
 
 .nav-btn:hover {
-    background-color: #555;
+    background-color: #844622;
     transform: scale(1.1);
 }
 
@@ -131,7 +194,7 @@ h2 {
 }
 
 .nav-btn:disabled {
-    background-color: #ccc;
+    background-color: #8446224f;
     cursor: not-allowed;
     transform: none;
 }
@@ -139,17 +202,43 @@ h2 {
 footer {
     text-align: center;
     padding: 2rem;
-    background-color: #333;
+    background-color: #1D400F;
     color: #fff;
+}
+
+#comic-title {
+    display: block;
+    margin: 0 auto; /* Centers it horizontally */
+    max-width: 100%; /* Ensures responsiveness */
+    height: auto;
+    position: absolute;
+    top: 20px; /* Adjusts distance from the top */
+    left: 50%;
+    transform: translateX(-50%); /* Ensures it's centered */
+    z-index: 10; /* Ensures it's above other elements */
 }
 
 #flower {
     position: absolute;
-    width: 300px;
+    width: 600px;
     left: 50%;
     transform: translateX(-50%);
     bottom: -400px; /* hide it initially */
     transition: bottom 1s ease;
+    animation: flowerBounce 2s infinite ease-in-out;
+    /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);; */
+}
+
+@keyframes flowerBounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-15px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-7px);
+    }
 }
 
 /* Responsive adjustments */
@@ -164,6 +253,14 @@ footer {
     
     h1 {
         font-size: 2rem;
+    }
+    
+    .choice-buttons {
+        flex-direction: column;
+    }
+    
+    .choice-btn {
+        width: 100%;
     }
 }
 

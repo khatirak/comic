@@ -1,89 +1,150 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize comic variables
-    let currentIndex = 1;
-    const totalPanels = 10; // Update this with your total number of panels
+    let currentPairIndex = 1; // Now tracking pairs instead of individual panels
+    const totalPanels = 12; // Total number of panels
+    let choiceMade = false; // Track if a story choice has been made
+    let choiceRoute = null; // Track which choice was selected (A or B)
     
     // Get DOM elements
     const panel1 = document.getElementById('panel1');
     const panel2 = document.getElementById('panel2');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
+    const storyChoice = document.getElementById('storyChoice');
+    const choiceABtn = document.getElementById('choiceA');
+    const choiceBBtn = document.getElementById('choiceB');
     
     // Predefined captions for each panel
     const panelCaptions = {
-        1: "Caption for panel 1 goes here",
-        2: "Caption for panel 2 goes here",
+        1: "It was an ordinary sunny, peaceful day.",
+        2: "Sunflower flexes her leafy arms. Sunflower: 'Not strong?! Look at these biceps! Pure, photosynthesized muscle!'",
         3: "Caption for panel 3 goes here",
         4: "Caption for panel 4 goes here",
         5: "Caption for panel 5 goes here",
         6: "Caption for panel 6 goes here",
         7: "Caption for panel 7 goes here",
         8: "Caption for panel 8 goes here",
-        9: "Caption for panel 9 goes here",
-        10: "Caption for panel 10 goes here"
+        9: "Option A: Caption for panel 9 goes here",
+        10: "Option A: Caption for panel 10 goes here",
+        11: "Option B: Caption for panel 11 goes here",
+        12: "Option B: Caption for panel 12 goes here",
     };
+    
+    // Load initial panels (1 & 2)
+    loadPanelPair(currentPairIndex);
     
     // Initialize navigation state
     updateNavigationState();
-    
-    // Set initial captions
-    loadPanelCaptions();
     
     // Navigation button event listeners
     nextBtn.addEventListener('click', goToNext);
     prevBtn.addEventListener('click', goToPrevious);
     
-    // Function to update the panels when going to the next page
+    // Story choice button event listeners
+    choiceABtn.addEventListener('click', function() {
+        makeChoice('A');
+    });
+    
+    choiceBBtn.addEventListener('click', function() {
+        makeChoice('B');
+    });
+    
+    // Function to handle story choice
+    function makeChoice(choice) {
+        choiceMade = true;
+        choiceRoute = choice;
+        
+        // Hide choice UI
+        storyChoice.style.display = 'none';
+        
+        // Show navigation buttons
+        nextBtn.disabled = false;
+        
+        // Load appropriate panels based on choice
+        if (choice === 'A') {
+            currentPairIndex = 5; // This will show panels 9 & 10
+        } else {
+            currentPairIndex = 6; // This will show panels 11 & 12
+        }
+        
+        loadPanelPair(currentPairIndex);
+        updateNavigationState();
+    }
+    
+    // Function to load a specific pair of panels
+    function loadPanelPair(pairIndex) {
+        // Calculate the panel numbers based on pair index
+        let leftPanelNum, rightPanelNum;
+        
+        if (choiceMade) {
+            if (choiceRoute === 'A') {
+                // Option A route (panels 9-10)
+                leftPanelNum = 9;
+                rightPanelNum = 10;
+            } else {
+                // Option B route (panels 11-12)
+                leftPanelNum = 11;
+                rightPanelNum = 12;
+            }
+        } else {
+            // Normal route (panels 1-8)
+            leftPanelNum = (pairIndex - 1) * 2 + 1;
+            rightPanelNum = leftPanelNum + 1;
+        }
+        
+        // Update images
+        panel1.querySelector('img').src = `img/panel${leftPanelNum}.jpeg`;
+        panel1.querySelector('img').alt = `Comic panel ${leftPanelNum}`;
+        
+        panel2.querySelector('img').src = `img/panel${rightPanelNum}.jpeg`;
+        panel2.querySelector('img').alt = `Comic panel ${rightPanelNum}`;
+        
+        // Update captions
+        panel1.querySelector('.caption-text').textContent = panelCaptions[leftPanelNum] || 'No caption available';
+        panel2.querySelector('.caption-text').textContent = panelCaptions[rightPanelNum] || 'No caption available';
+        
+        // Add transition effect
+        addTransitionEffect();
+    }
+    
+    // Function to go to the next pair of panels
     function goToNext() {
-        if (currentIndex < totalPanels - 1) {
-            currentIndex++;
-            
-            // Shift panel 2 to panel 1 position
-            panel1.querySelector('img').src = panel2.querySelector('img').src;
-            panel1.querySelector('img').alt = `Comic panel ${currentIndex}`;
-            
-            // Load new image into panel 2
-            panel2.querySelector('img').src = `img/panel${currentIndex + 1}.jpeg`;
-            panel2.querySelector('img').alt = `Comic panel ${currentIndex + 1}`;
-            
-            // Update captions
-            loadPanelCaptions();
-            
-            // Add transition effect
-            addTransitionEffect();
-            
-            // Update navigation buttons state
+        // Check if we're at the choice point (after panels 7&8)
+        if (currentPairIndex === 4 && !choiceMade) {
+            // Show the choice UI
+            storyChoice.style.display = 'block';
+            // Disable the next button until a choice is made
+            nextBtn.disabled = true;
+            return;
+        }
+        
+        // Normal navigation
+        if ((currentPairIndex < 4 && !choiceMade) || (choiceMade && currentPairIndex < 6)) {
+            currentPairIndex++;
+            loadPanelPair(currentPairIndex);
             updateNavigationState();
         }
     }
     
-    // Function to update the panels when going to the previous page
+    // Function to go to the previous pair of panels
     function goToPrevious() {
-        if (currentIndex > 1) {
-            currentIndex--;
+        if (currentPairIndex > 1) {
+            // If we're at the choice result panels and try to go back
+            if (choiceMade && (currentPairIndex === 5 || currentPairIndex === 6)) {
+                // Go back to panels 7&8
+                choiceMade = false;
+                choiceRoute = null;
+                currentPairIndex = 4;
+                
+                // Enable the next button
+                nextBtn.disabled = false;
+            } else {
+                currentPairIndex--;
+            }
             
-            // Load new images based on currentIndex
-            panel1.querySelector('img').src = `img/panel${currentIndex}.jpeg`;
-            panel1.querySelector('img').alt = `Comic panel ${currentIndex}`;
-            
-            panel2.querySelector('img').src = `img/panel${currentIndex + 1}.jpeg`;
-            panel2.querySelector('img').alt = `Comic panel ${currentIndex + 1}`;
-            
-            // Update captions
-            loadPanelCaptions();
-            
-            // Add transition effect
-            addTransitionEffect();
-            
-            // Update navigation buttons state
+            loadPanelPair(currentPairIndex);
             updateNavigationState();
         }
-    }
-    
-    // Function to load panel captions
-    function loadPanelCaptions() {
-        panel1.querySelector('.caption-text').textContent = panelCaptions[currentIndex] || 'No caption available';
-        panel2.querySelector('.caption-text').textContent = panelCaptions[currentIndex + 1] || 'No caption available';
     }
     
     // Function to add a visual transition effect
@@ -102,10 +163,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to update navigation buttons state
     function updateNavigationState() {
         // Disable prev button if at the beginning
-        prevBtn.disabled = currentIndex <= 1;
+        prevBtn.disabled = currentPairIndex <= 1;
         
-        // Disable next button if at the end
-        nextBtn.disabled = currentIndex >= totalPanels - 1;
+        // Handle next button state
+        if (choiceMade) {
+            // If a choice has been made, disable next button at the end
+            nextBtn.disabled = currentPairIndex >= 6;
+        } else {
+            // If no choice made yet, allow navigation up to choice point
+            nextBtn.disabled = currentPairIndex > 4;
+        }
     }
     
     // Smooth scroll from header to comic when clicking the down arrow
@@ -155,10 +222,10 @@ document.addEventListener('DOMContentLoaded', function() {
 // flower img comeup
 window.addEventListener('load', () => {
     const flower = document.getElementById('flower');
-    const halfWindowHeight = window.innerHeight / 2 - 50; // Dynamic half height
+    const halfWindowHeight = window.innerHeight / 5 - 50 ; // Dynamic half height
 
-    flower.style.transition = 'bottom 2s ease-in-out';
     flower.style.bottom = `${halfWindowHeight}px`; // Set dynamically
+    // Note: Removed transition here as it's now handled by CSS animation
 });
 
 // Update position if the window resizes

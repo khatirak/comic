@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scrolling Comic</title>
+    <title>Leaf It To Me</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Comic Title</h1>
-        <p>Scroll down to begin reading</p>
-        <div class="scroll-indicator">↓</div>
-        <img id="flower" src="img/panel1.jpeg" alt="Saturn" />
+        <img id="comic-title" src="img/title.png">
+        <div class="scroll-container">
+            <div class="scroll-indicator">↓</div>
+            <p class="scroll-text">Scroll Down To Start Reading</p>
+        </div>
+        <img id="flower" src="img/cover.png" />
     </header>
     
     <main class="comic-container">
-        <h2>Plotline of that page</h2>
         <div class="comic-panels">
             <div class="panel" id="panel1">
                 <img src="img/panel1.jpeg" alt="Comic panel 1">
@@ -31,6 +32,15 @@
             </div>
         </div>
         
+        <!-- Story choice section (hidden by default) -->
+        <div class="story-choice" id="storyChoice">
+            <h3>What should happen next?</h3>
+            <div class="choice-buttons">
+                <button id="choiceA" class="choice-btn">Option A: Sunflower takes a stand</button>
+                <button id="choiceB" class="choice-btn">Option B: Sunflower seeks help</button>
+            </div>
+        </div>
+        
         <div class="navigation">
             <button id="prevBtn" class="nav-btn">←</button>
             <button id="nextBtn" class="nav-btn">→</button>
@@ -38,8 +48,8 @@
     </main>
 
     <footer>
-        <p>© 2025 Comic Title - All Rights Reserved</p>
-        <p>Made By: Deema Al Zoubi, Guli Habibullaeva, Khatira Kazemi, Nigina Rashidov</p>
+        <p>© 2025 Leaf It To Me - All Rights Reserved</p>
+        <p>Made By: Deema Al Zoubi, Guli Habibullaeva, Khatira Kazemi, Nigina Rashidova</p>
     </footer>
 
     <script src="script.js"></script>
