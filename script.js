@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
             panel1.querySelector('img').alt = `Comic panel ${currentIndex}`;
             
             // Load new image into panel 2
-            panel2.querySelector('img').src = `images/panel${currentIndex + 1}.jpg`;
+            panel2.querySelector('img').src = `img/panel${currentIndex + 1}.jpg`;
             panel2.querySelector('img').alt = `Comic panel ${currentIndex + 1}`;
             
             // Add transition effect
@@ -43,10 +43,10 @@ document.addEventListener('DOMContentLoaded', function() {
             currentIndex--;
             
             // Load new images based on currentIndex
-            panel1.querySelector('img').src = `images/panel${currentIndex}.jpg`;
+            panel1.querySelector('img').src = `img/panel${currentIndex}.jpeg`;
             panel1.querySelector('img').alt = `Comic panel ${currentIndex}`;
             
-            panel2.querySelector('img').src = `images/panel${currentIndex + 1}.jpg`;
+            panel2.querySelector('img').src = `img/panel${currentIndex + 1}.jpeg`;
             panel2.querySelector('img').alt = `Comic panel ${currentIndex + 1}`;
             
             // Add transition effect
