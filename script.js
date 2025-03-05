@@ -17,10 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Predefined captions for each panel
     const panelCaptions = {
         1: "It was an ordinary sunny, peaceful day.",
-        2: "Sunflower flexes her leafy arms. Sunflower: 'Not strong?! Look at these biceps! Pure, photosynthesized muscle!'",
-        3: "Caption for panel 3 goes here",
-        4: "Caption for panel 4 goes here",
-        5: "Caption for panel 5 goes here",
+        2: "Sunny: 'Look at those biceps! Pure, photosynthesized muscle - just like me!'",
+        3: "<i>Sunny flexes her leafy arms.",
+        4: "<i>Peash squints.</i> \n “That’s… literally just leaves.”",
+        5: "<i>A zombie groans in the distance, Peash tenses.</i> \n  “Alright, step aside, I got this.”",
         6: "Caption for panel 6 goes here",
         7: "Caption for panel 7 goes here",
         8: "Caption for panel 8 goes here",
@@ -100,8 +100,8 @@ document.addEventListener('DOMContentLoaded', function() {
         panel2.querySelector('img').alt = `Comic panel ${rightPanelNum}`;
         
         // Update captions
-        panel1.querySelector('.caption-text').textContent = panelCaptions[leftPanelNum] || 'No caption available';
-        panel2.querySelector('.caption-text').textContent = panelCaptions[rightPanelNum] || 'No caption available';
+        panel1.querySelector('.caption-text').innerHTML = (panelCaptions[leftPanelNum] || 'No caption available').replace(/\n/g, '<br>');
+panel2.querySelector('.caption-text').innerHTML = (panelCaptions[rightPanelNum] || 'No caption available').replace(/\n/g, '<br>');
         
         // Add transition effect
         addTransitionEffect();
