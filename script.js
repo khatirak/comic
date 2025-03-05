@@ -9,8 +9,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     
+    // Predefined captions for each panel
+    const panelCaptions = {
+        1: "Caption for panel 1 goes here",
+        2: "Caption for panel 2 goes here",
+        3: "Caption for panel 3 goes here",
+        4: "Caption for panel 4 goes here",
+        5: "Caption for panel 5 goes here",
+        6: "Caption for panel 6 goes here",
+        7: "Caption for panel 7 goes here",
+        8: "Caption for panel 8 goes here",
+        9: "Caption for panel 9 goes here",
+        10: "Caption for panel 10 goes here"
+    };
+    
     // Initialize navigation state
     updateNavigationState();
+    
+    // Set initial captions
+    loadPanelCaptions();
     
     // Navigation button event listeners
     nextBtn.addEventListener('click', goToNext);
@@ -26,8 +43,11 @@ document.addEventListener('DOMContentLoaded', function() {
             panel1.querySelector('img').alt = `Comic panel ${currentIndex}`;
             
             // Load new image into panel 2
-            panel2.querySelector('img').src = `img/panel${currentIndex + 1}.jpg`;
+            panel2.querySelector('img').src = `img/panel${currentIndex + 1}.jpeg`;
             panel2.querySelector('img').alt = `Comic panel ${currentIndex + 1}`;
+            
+            // Update captions
+            loadPanelCaptions();
             
             // Add transition effect
             addTransitionEffect();
@@ -49,12 +69,21 @@ document.addEventListener('DOMContentLoaded', function() {
             panel2.querySelector('img').src = `img/panel${currentIndex + 1}.jpeg`;
             panel2.querySelector('img').alt = `Comic panel ${currentIndex + 1}`;
             
+            // Update captions
+            loadPanelCaptions();
+            
             // Add transition effect
             addTransitionEffect();
             
             // Update navigation buttons state
             updateNavigationState();
         }
+    }
+    
+    // Function to load panel captions
+    function loadPanelCaptions() {
+        panel1.querySelector('.caption-text').textContent = panelCaptions[currentIndex] || 'No caption available';
+        panel2.querySelector('.caption-text').textContent = panelCaptions[currentIndex + 1] || 'No caption available';
     }
     
     // Function to add a visual transition effect
@@ -123,24 +152,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Add a CSS class for the panel transition effect
-document.head.insertAdjacentHTML('beforeend', `
-    <style>
-        .panel-transition {
-            animation: panelFade 0.3s ease;
-        }
-        
-        @keyframes panelFade {
-            0% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
-    </style>
-`);
-
 // flower img comeup
 window.addEventListener('load', () => {
     const flower = document.getElementById('flower');
-    const halfWindowHeight = window.innerHeight / 2 -50; // Dynamic half height
+    const halfWindowHeight = window.innerHeight / 2 - 50; // Dynamic half height
 
     flower.style.transition = 'bottom 2s ease-in-out';
     flower.style.bottom = `${halfWindowHeight}px`; // Set dynamically

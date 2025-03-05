@@ -58,7 +58,7 @@ h2 {
 .comic-panels {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 5rem;
     margin-bottom: 1rem;
 }
 
@@ -69,6 +69,8 @@ h2 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
     background-color: #fff;
+    display: flex;
+    flex-direction: column;
 }
 
 .panel:hover {
@@ -79,6 +81,25 @@ h2 {
     width: 100%;
     height: auto;
     display: block;
+}
+
+/* Panel caption styling */
+.panel-caption {
+    padding: 15px;
+    background-color: #fff;
+    border-top: 2px solid #333;
+}
+
+.caption-text {
+    width: 100%;
+    min-height: 50px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    user-select: none; /* Prevents text selection */
 }
 
 .navigation {
@@ -123,13 +144,13 @@ footer {
 }
 
 #flower {
-	position: absolute;
-	width: 300px;
-	left: 50%;
-	transform: translateX(-50%);
-	bottom: -400px; /* hide it initially */
-	transition: bottom 1s ease;
-  }
+    position: absolute;
+    width: 300px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -400px; /* hide it initially */
+    transition: bottom 1s ease;
+}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -145,12 +166,6 @@ footer {
         font-size: 2rem;
     }
 }
-.comic-panels {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5rem; /* Increased from 1rem to 2rem for more space between panels */
-    margin-bottom: 1rem;
-}
 
 /* Alternative option: If you want even more space or specifically more space only between panel 1 and 2 */
 #panel1 {
@@ -159,4 +174,13 @@ footer {
 
 #panel2 {
     margin-left: 2rem; /* Add left margin to panel 2 */
+}
+
+.panel-transition {
+    animation: panelFade 0.3s ease;
+}
+
+@keyframes panelFade {
+    0% { opacity: 0.7; }
+    100% { opacity: 1; }
 }
