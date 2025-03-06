@@ -49,17 +49,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Predefined captions for each panel
     const panelCaptions = {
         1: "It was an ordinary sunny, peaceful day.",
-        2: "Sunny: 'Look at those biceps! Pure, photosynthesized muscle - just like me!'",
-        3: "<i>Sunny flexes her leafy arms.",
-        4: '"<i>Peash squints.</i> \n "That\'s… literally just leaves."',
-        5: '<i>A zombie groans in the distance, Peash tenses.</i> \n  "Alright, step aside, I got this."',
-        6: '<i>Peashooter fires peas at the zombie—peow! peow!—but it keeps walking.</i> \n "Uh… why isn\'t it stopping?"',
-        7: "'Sunny, I need you!'",
-        8: "<i>Sunflower sighs, then glows intensely. </i> 'Guess it's my time to shine!'",
-        9: "Sunny TRIES her best to produce the best sunnies",
-        10: "Sunny helps Peashooter with energy supply and together they celebrate victory.",
-        11: "All the plants die :(",
-        12: "Sunny was too scared to help and didn't have the confidence...",
+        2: "When suddenly, a peashooter was planted near the Sunflower To protect her.",
+        3: "Looking at her own muscles, the sunflower started doubting her powers.",
+        4: "She compared herself to the strong peashooter, feeling miserable",
+        5: 'Peashooter fires peas at the zombie—peow! peow!—but it keeps walking.\n Peashooter: “Uh… it is too much!”',
+        6: 'Peashooter panics and realizes that he can’t deal with it himself. He needs SUPPORT!',
+        7: "Peashooter asks Sunflower for help, for additional energy that only she can give him with her sunnies.",
+        8: "He explains to her the importance of self-love and asks her to embrace her unique powers.",
+        9: "Sunflower tries her best to produce the best sunnies.",
+        10: "She helps Peashooter with energy supply and together they celebrate victory.",
+        11: "Sunflower rejects Peashooter’s help, since she doesn’t believe in her powers.",
+        12: "Unfortunately this leads to tragic death of all plants :( ",
     };
     
     // Load initial panels (1 & 2)
