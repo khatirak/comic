@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const totalPanels = 12; // Total number of panels
     let choiceMade = false; // Track if a story choice has been made
     let choiceRoute = null; // Track which choice was selected (A or B)
+    let currentAudio = null; // Track current playing audio
+    let isMuted = false; // Track mute state
     
     // Get DOM elements
     const panel1 = document.getElementById('panel1');
@@ -13,21 +15,51 @@ document.addEventListener('DOMContentLoaded', function() {
     const storyChoice = document.getElementById('storyChoice');
     const choiceABtn = document.getElementById('choiceA');
     const choiceBBtn = document.getElementById('choiceB');
+    const muteButton = document.getElementById('muteButton');
+    const muteIcon = document.getElementById('muteIcon');
+    
+    // Audio files for specific panels
+    const panelSounds = {
+        5: 'sounds/shooting.wav', // Shooting sound for panel 5
+        9: 'sounds/fun.flac'      // Fun sound for panel 9 (Option A path)
+    };
+    
+    // Mute button event listener
+    muteButton.addEventListener('click', function() {
+        isMuted = !isMuted;
+        
+        if (isMuted) {
+            // Update UI to show muted state
+            muteIcon.textContent = '🔇';
+            muteButton.classList.add('muted');
+            
+            // Stop any currently playing audio
+            stopCurrentAudio();
+        } else {
+            // Update UI to show unmuted state
+            muteIcon.textContent = '🔊';
+            muteButton.classList.remove('muted');
+            
+            // Play the audio for the current panel if there is one
+            const leftPanelNum = (currentPairIndex - 1) * 2 + 1;
+            playPanelSound(leftPanelNum);
+        }
+    });
     
     // Predefined captions for each panel
     const panelCaptions = {
         1: "It was an ordinary sunny, peaceful day.",
         2: "Sunny: 'Look at those biceps! Pure, photosynthesized muscle - just like me!'",
         3: "<i>Sunny flexes her leafy arms.",
-        4: "<i>Peash squints.</i> \n “That’s… literally just leaves.”",
-        5: "<i>A zombie groans in the distance, Peash tenses.</i> \n  “Alright, step aside, I got this.”",
-        6: "Caption for panel 6 goes here",
-        7: "Caption for panel 7 goes here",
-        8: "Caption for panel 8 goes here",
-        9: "Option A: Caption for panel 9 goes here",
-        10: "Option A: Caption for panel 10 goes here",
-        11: "Option B: Caption for panel 11 goes here",
-        12: "Option B: Caption for panel 12 goes here",
+        4: '"<i>Peash squints.</i> \n "That\'s… literally just leaves."',
+        5: '<i>A zombie groans in the distance, Peash tenses.</i> \n  "Alright, step aside, I got this."',
+        6: '<i>Peashooter fires peas at the zombie—peow! peow!—but it keeps walking.</i> \n "Uh… why isn\'t it stopping?"',
+        7: "'Sunny, I need you!'",
+        8: "<i>Sunflower sighs, then glows intensely. </i> 'Guess it's my time to shine!'",
+        9: "Sunny TRIES her best to produce the best sunnies",
+        10: "Sunny helps Peashooter with energy supply and together they celebrate victory.",
+        11: "All the plants die :(",
+        12: "Sunny was too scared to help and didn't have the confidence...",
     };
     
     // Load initial panels (1 & 2)
@@ -49,8 +81,42 @@ document.addEventListener('DOMContentLoaded', function() {
         makeChoice('B');
     });
     
+    // Function to play sound for specific panels
+    function playPanelSound(panelNumber) {
+        // Stop any currently playing audio
+        stopCurrentAudio();
+        
+        // Only play if not muted
+        if (!isMuted && panelSounds[panelNumber]) {
+            try {
+                // Create and play the audio
+                currentAudio = new Audio(panelSounds[panelNumber]);
+                
+                // Play the audio
+                currentAudio.play().catch(error => {
+                    console.log("Audio playback was prevented:", error);
+                    // Many browsers require user interaction before playing audio
+                });
+            } catch (error) {
+                console.error("Error playing audio:", error);
+            }
+        }
+    }
+    
+    // Function to stop currently playing audio
+    function stopCurrentAudio() {
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+            currentAudio = null;
+        }
+    }
+    
     // Function to handle story choice
     function makeChoice(choice) {
+        // Stop any currently playing audio
+        stopCurrentAudio();
+        
         choiceMade = true;
         choiceRoute = choice;
         
@@ -101,7 +167,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update captions
         panel1.querySelector('.caption-text').innerHTML = (panelCaptions[leftPanelNum] || 'No caption available').replace(/\n/g, '<br>');
-panel2.querySelector('.caption-text').innerHTML = (panelCaptions[rightPanelNum] || 'No caption available').replace(/\n/g, '<br>');
+        panel2.querySelector('.caption-text').innerHTML = (panelCaptions[rightPanelNum] || 'No caption available').replace(/\n/g, '<br>');
+        
+        // Play sound for these panels if they have one
+        playPanelSound(leftPanelNum);
         
         // Add transition effect
         addTransitionEffect();
@@ -109,6 +178,9 @@ panel2.querySelector('.caption-text').innerHTML = (panelCaptions[rightPanelNum] 
     
     // Function to go to the next pair of panels
     function goToNext() {
+        // Stop any currently playing audio
+        stopCurrentAudio();
+        
         // Check if we're at the choice point (after panels 7&8)
         if (currentPairIndex === 4 && !choiceMade) {
             // Show the choice UI
@@ -128,6 +200,9 @@ panel2.querySelector('.caption-text').innerHTML = (panelCaptions[rightPanelNum] 
     
     // Function to go to the previous pair of panels
     function goToPrevious() {
+        // Stop any currently playing audio
+        stopCurrentAudio();
+        
         if (currentPairIndex > 1) {
             // If we're at the choice result panels and try to go back
             if (choiceMade && (currentPairIndex === 5 || currentPairIndex === 6)) {
@@ -176,7 +251,7 @@ panel2.querySelector('.caption-text').innerHTML = (panelCaptions[rightPanelNum] 
     }
     
     // Smooth scroll from header to comic when clicking the down arrow
-    document.querySelector('.scroll-indicator').addEventListener('click', function() {
+    document.querySelector('.scroll-container').addEventListener('click', function() {
         document.querySelector('.comic-container').scrollIntoView({ 
             behavior: 'smooth' 
         });
@@ -188,6 +263,9 @@ panel2.querySelector('.caption-text').innerHTML = (panelCaptions[rightPanelNum] 
             goToNext();
         } else if (e.key === 'ArrowLeft') {
             goToPrevious();
+        } else if (e.key === 'M' || e.key === 'm') {
+            // Toggle mute with M key
+            muteButton.click();
         }
     });
     
@@ -222,7 +300,7 @@ panel2.querySelector('.caption-text').innerHTML = (panelCaptions[rightPanelNum] 
 // flower img comeup
 window.addEventListener('load', () => {
     const flower = document.getElementById('flower');
-    const halfWindowHeight = window.innerHeight / 5 - 50 ; // Dynamic half height
+    const halfWindowHeight = window.innerHeight / 5 - 50; // Dynamic half height
 
     flower.style.bottom = `${halfWindowHeight}px`; // Set dynamically
     // Note: Removed transition here as it's now handled by CSS animation
